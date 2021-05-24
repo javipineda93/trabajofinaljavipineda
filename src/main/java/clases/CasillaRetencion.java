@@ -1,8 +1,10 @@
 package clases;
+
 import java.awt.image.BufferedImage;
 import java.util.HashSet;
 
 import clases.Casilla;
+import enums.TipoCasillaRetencion;
 
 /**
  * clase para modelar las casillas de retencion, que te dejarán un determinado numero de turnos sin jugar.
@@ -13,7 +15,7 @@ public class CasillaRetencion extends Casilla{
 	//numero de turnos retenido
 	private byte turnosRetenido;
 	//tipo de casilla de retencion
-	private tipoCasillaRetencion casillaRetencion;
+	private TipoCasillaRetencion casillaRetencion;
 	
 	
 	/**
@@ -25,7 +27,7 @@ public class CasillaRetencion extends Casilla{
 	 * @param casillaRetencion tipoCasillaRetencion
 	 */
 	public CasillaRetencion(byte numeroCasilla, BufferedImage imagen, HashSet<Jugador> jugadores, byte turnosRetenido,
-			tipoCasillaRetencion casillaRetencion) {
+			TipoCasillaRetencion casillaRetencion) {
 		super(numeroCasilla, imagen, jugadores);
 		this.turnosRetenido = turnosRetenido;
 		this.casillaRetencion = casillaRetencion;
@@ -55,7 +57,7 @@ public class CasillaRetencion extends Casilla{
 	 * funcion para obtener el tipo de casilla retencion 
 	 * @return tipoCasillaRetencion
 	 */
-	public tipoCasillaRetencion getCasillaRetencion() {
+	public TipoCasillaRetencion getCasillaRetencion() {
 		return casillaRetencion;
 	}
 
@@ -64,7 +66,7 @@ public class CasillaRetencion extends Casilla{
 	 * funcion para definir el tipo de casilla retencion
 	 * @param casillaRetencion
 	 */
-	public void setCasillaRetencion(tipoCasillaRetencion casillaRetencion) {
+	public void setCasillaRetencion(TipoCasillaRetencion casillaRetencion) {
 		this.casillaRetencion = casillaRetencion;
 	}
 
@@ -77,10 +79,4 @@ public class CasillaRetencion extends Casilla{
 		return "CasillaRetencion: \nTurnosRetenido: " + turnosRetenido + "\nCasillaRetencion: " + casillaRetencion;
 	}
 
-
-
-	public enum tipoCasillaRetencion{
-		POSADA,
-		CARCEL
-	}
 }
