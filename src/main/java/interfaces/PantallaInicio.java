@@ -25,7 +25,10 @@ public class PantallaInicio extends JPanel{
 	private JTextField campoJug4;
 	private byte numJugadores;
 	private Ventana ventana;
-	public PantallaInicio() {
+	
+	
+	public PantallaInicio(Ventana v) {
+		this.ventana = v;
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelCabecera = new JPanel();
@@ -70,16 +73,7 @@ public class PantallaInicio extends JPanel{
 		panelMedio.add(campoJug4);
 		campoJug4.setColumns(10);
 		
-		JButton botonComenzar = new JButton("Comenzar Partida");
-		botonComenzar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ventana.irAPantallaTablero();
-			}
-		});
-		botonComenzar.setFont(new Font("Consolas", Font.BOLD, 13));
-		botonComenzar.setBounds(118, 334, 269, 45);
-		panelMedio.add(botonComenzar);
+		
 		
 		JButton botonCargar = new JButton("Cargar Partida");
 		botonCargar.setFont(new Font("Consolas", Font.BOLD, 13));
@@ -100,7 +94,7 @@ public class PantallaInicio extends JPanel{
 						campoJug4.setEnabled(true);
 					}
 				}else {
-					//TODO crear excepcion limite jugadores
+					//TODO
 					
 				}
 			}
@@ -129,6 +123,16 @@ public class PantallaInicio extends JPanel{
 		panelMedio.add(botonQuitarJug);
 		
 		this.numJugadores = 2;
+		
+		JButton botonComenzar = new JButton("Comenzar Partida");
+		botonComenzar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ventana.irAPantallaTablero();
+			}
+		});
+		botonComenzar.setFont(new Font("Consolas", Font.BOLD, 13));
+		botonComenzar.setBounds(118, 334, 269, 45);
+		panelMedio.add(botonComenzar);
 		
 	}
 }

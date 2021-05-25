@@ -12,7 +12,11 @@ import java.awt.GridLayout;
 import java.awt.Font;
 
 public class PantallaTablero extends JPanel{
-	public PantallaTablero() {
+	private Ventana ventana;
+	
+	
+	public PantallaTablero(Ventana v) {
+		this.ventana = v;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -511,7 +515,4 @@ public class PantallaTablero extends JPanel{
 		add(casilla1, gbc_casilla1);
 	}
 
-	public PantallaTablero(Ventana ventana) {
-		// TODO Auto-generated constructor stub
-	}
 }

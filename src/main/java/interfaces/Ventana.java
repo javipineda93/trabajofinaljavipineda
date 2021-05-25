@@ -29,12 +29,8 @@ public class Ventana extends JFrame{
 		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		pantallaInicio = new PantallaInicio();
+		pantallaInicio = new PantallaInicio(this);
 		this.setContentPane(pantallaInicio);
-		this.setVisible(true);
-		
-		pantallaTablero = new PantallaTablero();
-		this.setContentPane(pantallaTablero);
 		this.setVisible(true);
 		
 	}
