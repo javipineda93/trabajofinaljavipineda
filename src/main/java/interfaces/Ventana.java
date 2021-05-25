@@ -11,20 +11,41 @@ public class Ventana extends JFrame{
 	private PantallaInicio pantallaInicio;
 	private PantallaTablero pantallaTablero;
 	
-	
 	public Ventana() {
-		setVisible(true);
-		this.setTitle("Juego de la Oca");
-		this.setSize(1020, 780);
-		this.setLocation(350,20);
+		
+		this.setSize(900, 700);
+		this.setTitle("Programa Juego de la Oca");
+		this.setLocation(400, 80);
+		this.setResizable(false);
+		
+		try {
+			BufferedImage icono = ImageIO.read(new File("iconoOca.jpg"));
+			this.setIconImage(icono);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		pantallaInicio=new PantallaInicio(this);
+		pantallaInicio = new PantallaInicio();
 		this.setContentPane(pantallaInicio);
 		this.setVisible(true);
 		
+		pantallaTablero = new PantallaTablero();
+		this.setContentPane(pantallaTablero);
+		this.setVisible(true);
+		
+	}
 	
-	}	
+	public void irAPantallaTablero() {
+		if(this.pantallaTablero==null) {
+			this.pantallaTablero=new PantallaTablero(this);
+		}
+		this.pantallaInicio.setVisible(false);
+		this.setContentPane(this.pantallaTablero);
+		this.pantallaTablero.setVisible(true);
+	}
+	
 }
