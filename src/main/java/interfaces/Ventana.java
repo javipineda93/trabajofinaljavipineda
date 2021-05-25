@@ -13,9 +13,9 @@ public class Ventana extends JFrame{
 	
 	public Ventana() {
 		
-		this.setSize(900, 700);
+		this.setSize(1000, 800);
 		this.setTitle("Programa Juego de la Oca");
-		this.setLocation(400, 80);
+		this.setLocation(300, 0);
 		this.setResizable(false);
 		
 		try {
