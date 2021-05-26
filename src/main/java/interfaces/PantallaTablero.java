@@ -280,10 +280,14 @@ public class PantallaTablero extends JPanel{
 				String texto = "";
 				if((jugadores.get(turnoJugador).getFicha().getPosicion()+tirada) > 61) {
 					//no se hace nada
-					texto+= "Has sacado un "+ tirada + ", te has pasado crack.";
+					texto+= "Has sacado un "+ tirada + ", te has pasado crack. Estas en la casilla: " + jugadores.get(turnoJugador).getFicha().getPosicion();
+					
 				}else {
 					jugadores.get(turnoJugador).getFicha().sumaTirada(tirada);
-					texto+= "Has sacado un "+ tirada + ", estas en la casilla" + jugadores.get(turnoJugador).getFicha().getPosicion();
+					texto+= "Has sacado un "+ tirada + ", estas en la casilla " + jugadores.get(turnoJugador).getFicha().getPosicion();
+					if((jugadores.get(turnoJugador).getFicha().getPosicion()) == 61) {
+						texto+= ". Has ganao Loco!!";
+					}
 				}
 				if((jugadores.get(turnoJugador).getFicha().getPosicion()+tirada) == 61) {
 					//Gana partida
