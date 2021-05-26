@@ -287,7 +287,7 @@ public class PantallaTablero extends JPanel{
 				}
 				if((jugadores.get(turnoJugador).getFicha().getPosicion()+tirada) == 61) {
 					//Gana partida
-					texto += "Has ganao Loco!";
+					texto += ". Has ganao Loco!";
 					botonTirarDado.setEnabled(false);
 				}else {
 					//Sigue la partida
