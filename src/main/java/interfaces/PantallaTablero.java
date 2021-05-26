@@ -1,28 +1,50 @@
 package interfaces;
 
 import javax.swing.JPanel;
+
+import clases.Jugador;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import javax.swing.ImageIcon;
 import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.Random;
+
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PantallaTablero extends JPanel{
 	private Ventana ventana;
+	private ArrayList <Jugador> jugadores;
+	private byte turnoJugador;
 	
-	
-	public PantallaTablero(Ventana v) {
+	public PantallaTablero(Ventana v, final ArrayList <Jugador> jugadores) {
 		this.ventana = v;
+		this.jugadores = jugadores;
+		this.turnoJugador = 0;
+		
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
+		
+		final JLabel labelLog = new JLabel("consola");
+		labelLog.setBackground(Color.ORANGE);
+		GridBagConstraints gbc_labelLog = new GridBagConstraints();
+		gbc_labelLog.gridwidth = 5;
+		gbc_labelLog.insets = new Insets(0, 0, 0, 5);
+		gbc_labelLog.gridx = 23;
+		gbc_labelLog.gridy = 16;
+		add(labelLog, gbc_labelLog);
 		
 		JLabel casilla20 = new JLabel("20");
 		casilla20.setFont(new Font("Tahoma", Font.BOLD, 55));
@@ -249,7 +271,35 @@ public class PantallaTablero extends JPanel{
 		gbc_casilla52.gridy = 10;
 		add(casilla52, gbc_casilla52);
 		
-		JButton botonTirarDado = new JButton("Tirar Dado");
+		final JButton botonTirarDado = new JButton("Tirar Dado");
+		botonTirarDado.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Random r = new Random();
+				byte tirada = (byte) (r.nextInt(6)+1);
+				String texto = "";
+				if((jugadores.get(turnoJugador).getFicha().getPosicion()+tirada) > 61) {
+					//no se hace nada
+					texto+= "Has sacado un "+ tirada + ", te has pasado crack.";
+				}else {
+					jugadores.get(turnoJugador).getFicha().sumaTirada(tirada);
+					texto+= "Has sacado un "+ tirada + ", estas en la casilla" + jugadores.get(turnoJugador).getFicha().getPosicion();
+				}
+				if((jugadores.get(turnoJugador).getFicha().getPosicion()+tirada) == 61) {
+					//Gana partida
+					texto += "Has ganao Loco!";
+					botonTirarDado.setEnabled(false);
+				}else {
+					//Sigue la partida
+					turnoJugador++;
+					if(jugadores.size()==turnoJugador) {
+						turnoJugador = 0;
+					}
+					texto+= ". Ahora es el turno de " + jugadores.get(turnoJugador).getNombre();
+				}
+				labelLog.setText(texto);
+			}
+		});
 		botonTirarDado.setFont(new Font("Consolas", Font.BOLD, 10));
 		GridBagConstraints gbc_botonTirarDado = new GridBagConstraints();
 		gbc_botonTirarDado.insets = new Insets(0, 0, 5, 5);
@@ -510,9 +560,20 @@ public class PantallaTablero extends JPanel{
 		JLabel casilla1 = new JLabel("");
 		casilla1.setIcon(new ImageIcon("comienzo.png"));
 		GridBagConstraints gbc_casilla1 = new GridBagConstraints();
+		gbc_casilla1.insets = new Insets(0, 0, 5, 0);
 		gbc_casilla1.gridx = 32;
 		gbc_casilla1.gridy = 15;
 		add(casilla1, gbc_casilla1);
+		
+		
+	}
+	
+	public void jugarPartida() {
+		boolean seguirJugando = true;
+		
+		while(seguirJugando) {
+			
+		}
 	}
 
 }

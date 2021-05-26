@@ -11,7 +11,7 @@ public class Jugador {
 	//nombre del jugador
 	private String nombre;
 	//turnos que estará retenido en caso de caer en alguna casilla de retención
-	private Byte turnosRetenido;
+    private byte turnosRetenido;
 	//ficha que tendrá asginada cada jugador. Obtenida de clase Ficha.
 	private Ficha ficha;
 	
@@ -21,7 +21,7 @@ public class Jugador {
 	 * @param turnosRetenido turnos que no podrá tirar.
 	 * @param ficha que tendrá asginada.
 	 */
-	public Jugador(String nombre, Byte turnosRetenido, Ficha ficha) {
+	public Jugador(String nombre, byte turnosRetenido, Ficha ficha) {
 		this.nombre = nombre;
 		this.turnosRetenido = turnosRetenido;
 		this.ficha = ficha;
@@ -36,6 +36,7 @@ public class Jugador {
 		super();
 		this.nombre = nombre;
 		this.ficha = ficha;
+		this.turnosRetenido = 0;
 	}
 
 	/**
@@ -58,7 +59,7 @@ public class Jugador {
 	 * funcion para obtener el turno que tiene cada jugador
 	 * @return byte
 	 */
-	public Byte getTurnosRetenido() {
+	public byte getTurnosRetenido() {
 		return turnosRetenido;
 	}
 
@@ -66,7 +67,7 @@ public class Jugador {
 	 * funcion para obtener el numero de turnos retenidos que estará cada jugador
 	 * @param turnosRetenido
 	 */
-	public void setTurnosRetenido(Byte turnosRetenido) {
+	public void setTurnosRetenido(byte turnosRetenido) {
 		this.turnosRetenido = turnosRetenido;
 	}
 

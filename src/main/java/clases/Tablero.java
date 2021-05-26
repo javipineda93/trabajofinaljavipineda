@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Tablero {
 	//casillas que tendrá el tablero.
 	private ArrayList<Casilla> casillas;
+
 	
 	
 	//constructor para modelar un tablero

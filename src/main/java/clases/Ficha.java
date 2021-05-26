@@ -61,5 +61,8 @@ public class Ficha {
 		return "Ficha: " + color + ", posicion: " + posicion;
 	}
 	
+	public void sumaTirada(byte tirada) {
+		this.posicion+=tirada;
+	}
 	
 }

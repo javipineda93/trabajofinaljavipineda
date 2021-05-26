@@ -3,9 +3,12 @@ package interfaces;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+
+import clases.Jugador;
 
 public class Ventana extends JFrame{
 	private PantallaInicio pantallaInicio;
@@ -16,7 +19,7 @@ public class Ventana extends JFrame{
 		this.setSize(1000, 800);
 		this.setTitle("Programa Juego de la Oca");
 		this.setLocation(300, 0);
-		this.setResizable(false);
+		this.setResizable(true);
 		
 		try {
 			BufferedImage icono = ImageIO.read(new File("iconoOca.jpg"));
@@ -35,9 +38,9 @@ public class Ventana extends JFrame{
 		
 	}
 	
-	public void irAPantallaTablero() {
+	public void irAPantallaTablero(ArrayList <Jugador> jugadores ) {
 		if(this.pantallaTablero==null) {
-			this.pantallaTablero=new PantallaTablero(this);
+			this.pantallaTablero=new PantallaTablero(this,jugadores);
 		}
 		this.pantallaInicio.setVisible(false);
 		this.setContentPane(this.pantallaTablero);

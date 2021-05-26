@@ -16,7 +16,12 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.SwingConstants;
+
+import clases.Ficha;
+import clases.Jugador;
 
 public class PantallaInicio extends JPanel{
 	private JTextField campoJug1;
@@ -127,7 +132,17 @@ public class PantallaInicio extends JPanel{
 		JButton botonComenzar = new JButton("Comenzar Partida");
 		botonComenzar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ventana.irAPantallaTablero();
+				ArrayList <Jugador> jugadores =  new ArrayList<Jugador>();
+				jugadores.add(new Jugador(campoJug1.getText().toString(),new Ficha("Rojo",(byte) 1)));
+				jugadores.add(new Jugador(campoJug2.getText().toString(),new Ficha("Azul",(byte) 1)));
+				if(numJugadores==3) {
+					jugadores.add(new Jugador(campoJug3.getText().toString(),new Ficha("Verde",(byte) 1)));
+				}
+				if(numJugadores==4) {
+					jugadores.add(new Jugador(campoJug4.getText().toString(),new Ficha("Amarillo",(byte) 1)));
+				}
+						
+				ventana.irAPantallaTablero(jugadores);
 			}
 		});
 		botonComenzar.setFont(new Font("Consolas", Font.BOLD, 13));
