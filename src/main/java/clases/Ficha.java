@@ -60,7 +60,10 @@ public class Ficha {
 	public String toString() {
 		return "Ficha: " + color + ", posicion: " + posicion;
 	}
-	
+	/**
+	 * funcion que nos suma la tirada con la posicion de la ficha.
+	 * @param tirada
+	 */
 	public void sumaTirada(byte tirada) {
 		this.posicion+=tirada;
 	}

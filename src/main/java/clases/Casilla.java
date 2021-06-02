@@ -14,8 +14,6 @@ import clases.Jugador;
 public class Casilla {
 	//sera el numero que tendrá asignado cada casilla
 	private byte numeroCasilla;
-	//será la imagen asignada a cada casilla
-	private BufferedImage imagen;
 	//jugadores que habra en cada casilla
 	private HashSet<Jugador>jugadores;
 	
@@ -25,11 +23,19 @@ public class Casilla {
 	 * @param imagen BufferedImage
 	 * @param jugadores Jugador
 	 */
-	public Casilla(byte numeroCasilla, BufferedImage imagen, HashSet<Jugador> jugadores) {
+	public Casilla(byte numeroCasilla, HashSet<Jugador> jugadores) {
 		this.numeroCasilla = numeroCasilla;
-		this.imagen = imagen;
 		this.jugadores = jugadores;
 	}
+	
+	//TODO
+	public Casilla(byte numeroCasilla) {
+		super();
+		this.numeroCasilla = numeroCasilla;
+		this.jugadores=new HashSet<Jugador>();
+	}
+
+
 	/*
 	 * funcion para obtener el numero que tendrá asignada cada casilla
 	 */
@@ -42,20 +48,6 @@ public class Casilla {
 	 */
 	public void setNumeroCasilla(byte numeroCasilla) {
 		this.numeroCasilla = numeroCasilla;
-	}
-	/**
-	 * funcion para obtener la imagen que tendrá una casilla
-	 * @return Image
-	 */
-	public BufferedImage getImagen() {
-		return imagen;
-	}
-	/**
-	 * funcion para definir la imagen que tendrá una casilla.
-	 * @param imagen Image
-	 */
-	public void setImagen(BufferedImage imagen) {
-		this.imagen = imagen;
 	}
 	/**
 	 * funcion para obtener jugador que habrá en una casilla.
@@ -77,7 +69,7 @@ public class Casilla {
 	 */
 	@Override
 	public String toString() {
-		return "Casilla: \nnumeroCasilla: " + numeroCasilla + ", imagen: " + imagen + ", jugadores: " + jugadores;
+		return "Casilla: \nnumeroCasilla: " + numeroCasilla  + ", jugadores: " + jugadores;
 	}
 	
 	

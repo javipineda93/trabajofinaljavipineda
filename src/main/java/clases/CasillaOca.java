@@ -15,9 +15,9 @@ public class CasillaOca extends Casilla{
 	 * @param imagen
 	 * @param jugadores
 	 */
-	public CasillaOca(byte numeroCasilla, BufferedImage imagen, HashSet<Jugador> jugadores) {
-		super(numeroCasilla, imagen, jugadores);
-		// TODO Auto-generated constructor stub
+	public CasillaOca(byte numeroCasilla) {
+		super(numeroCasilla);
+		// TODO Auto-generated constructor stub.
 	}
 	
 	
@@ -27,4 +27,10 @@ public class CasillaOca extends Casilla{
 	public void siguienteCasillaOca() {
 		
 	}
+
+
+	
+	
+	
+	
 }

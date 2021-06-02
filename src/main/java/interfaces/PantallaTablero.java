@@ -2,7 +2,13 @@ package interfaces;
 
 import javax.swing.JPanel;
 
+import clases.Casilla;
+import clases.CasillaConectada;
+import clases.CasillaOca;
+import clases.CasillaRetencion;
 import clases.Jugador;
+import enums.TipoCasillaConectada;
+import enums.TipoCasillaRetencion;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -10,6 +16,7 @@ import java.awt.GridBagConstraints;
 import javax.swing.ImageIcon;
 import java.awt.Insets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -18,33 +25,81 @@ import java.awt.GridLayout;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.JTextArea;
 
 public class PantallaTablero extends JPanel{
 	private Ventana ventana;
 	private ArrayList <Jugador> jugadores;
 	private byte turnoJugador;
+	private ArrayList <Casilla> casillas;
 	
 	public PantallaTablero(Ventana v, final ArrayList <Jugador> jugadores) {
 		this.ventana = v;
 		this.jugadores = jugadores;
 		this.turnoJugador = 0;
+		this.casillas = new ArrayList <Casilla>();
+		
+		
+		
+		for(int i = 0; i<62; i++) {
+			switch(i) {
+			case 54:
+			case 50:
+			case 45:
+			case 41:
+			case 36:
+			case 32:
+			case 27:
+			case 23:
+			case 18:
+			case 15:
+			case 9:
+			case 5:
+				this.casillas.add(new CasillaOca((byte) i));
+				break; //es una casilla oca
+			case 6:
+				this.casillas.add(new CasillaConectada((byte)i,(byte)12,TipoCasillaConectada.PUENTE));
+				break;
+			case 12:
+				this.casillas.add(new CasillaConectada((byte)i,(byte)6,TipoCasillaConectada.PUENTE));
+				break;
+			case 26: 
+				this.casillas.add(new CasillaConectada((byte)i,(byte)53,TipoCasillaConectada.DADO));
+				break;
+			case 53: 
+				this.casillas.add(new CasillaConectada((byte)i,(byte)26,TipoCasillaConectada.DADO));
+				break;
+			case 42:
+				this.casillas.add(new CasillaConectada((byte)i,(byte)31,TipoCasillaConectada.LABERINTO));
+				break;
+			case 60:
+				this.casillas.add(new CasillaConectada((byte)i,(byte)1,TipoCasillaConectada.MUERTE));
+				break;
+			case 19:
+				this.casillas.add(new CasillaRetencion((byte)i,(byte)1,TipoCasillaRetencion.POSADA));
+				break;
+			case 56:
+				this.casillas.add(new CasillaRetencion((byte)i,(byte)2,TipoCasillaRetencion.CARCEL));
+				break;
+			default:
+				this.casillas.add(new Casilla((byte)i));
+				break;
+			}
+		}
 		
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
-		
-		final JLabel labelLog = new JLabel("consola");
-		labelLog.setBackground(Color.ORANGE);
-		GridBagConstraints gbc_labelLog = new GridBagConstraints();
-		gbc_labelLog.gridwidth = 5;
-		gbc_labelLog.insets = new Insets(0, 0, 0, 5);
-		gbc_labelLog.gridx = 23;
-		gbc_labelLog.gridy = 16;
-		add(labelLog, gbc_labelLog);
 		
 		JLabel casilla20 = new JLabel("20");
 		casilla20.setFont(new Font("Tahoma", Font.BOLD, 55));
@@ -271,37 +326,119 @@ public class PantallaTablero extends JPanel{
 		gbc_casilla52.gridy = 10;
 		add(casilla52, gbc_casilla52);
 		
+		
+		final JTextArea textLog = new JTextArea();
+		textLog.setLineWrap(true);
+		GridBagConstraints gbc_textLog = new GridBagConstraints();
+		gbc_textLog.gridwidth = 5;
+		gbc_textLog.insets = new Insets(0, 0, 0, 5);
+		gbc_textLog.fill = GridBagConstraints.BOTH;
+		gbc_textLog.gridx = 24;
+		gbc_textLog.gridy = 16;
+		add(textLog, gbc_textLog);
+		textLog.setEditable(false);
+		
 		final JButton botonTirarDado = new JButton("Tirar Dado");
 		botonTirarDado.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Random r = new Random();
-				byte tirada = (byte) (r.nextInt(6)+1);
-				String texto = "";
-				if((jugadores.get(turnoJugador).getFicha().getPosicion()+tirada) > 61) {
-					//no se hace nada
-					texto+= "Has sacado un "+ tirada + ", te has pasado crack. Estas en la casilla: " + jugadores.get(turnoJugador).getFicha().getPosicion();
+				if(botonTirarDado.isEnabled()) {
+					String texto = "";
+					Random r = new Random();
+					byte tirada = (byte) (r.nextInt(6)+1);
+					boolean repiteTurno = false;
+					if(jugadores.get(turnoJugador).getTurnosRetenido() != 0) {
+						texto+="El jugador " + jugadores.get(turnoJugador).getNombre() + " está retenido.";
+						jugadores.get(turnoJugador).setTurnosRetenido((byte)(jugadores.get(turnoJugador).getTurnosRetenido()-1));
+						
+					}else {
+						
+						
+						if((jugadores.get(turnoJugador).getFicha().getPosicion()+tirada) > 61) {
+							//no se hace nada
+							texto+= "Has sacado un "+ tirada + ", te has pasado crack. Estas en la casilla: " + jugadores.get(turnoJugador).getFicha().getPosicion();
+							
+						}else {
+							jugadores.get(turnoJugador).getFicha().sumaTirada(tirada);
+							
+							byte posicion = jugadores.get(turnoJugador).getFicha().getPosicion();
+							if(casillas.get(posicion).getClass().toString().contains("CasillaOca")) {
+								for(int i = posicion+1; i<casillas.size(); i++) {
+									if(casillas.get(i).getClass().toString().contains("CasillaOca")) {
+										jugadores.get(turnoJugador).getFicha().setPosicion(casillas.get(i).getNumeroCasilla());
+										break;
+									}
+								}
+								texto+="De oca en oca y tiras por que el juego es asi. ";
+								repiteTurno = true;
+							}
+							if(casillas.get(posicion).getClass().toString().contains("CasillaConectada")) {							
+								jugadores.get(turnoJugador).getFicha().setPosicion(((CasillaConectada)casillas.get(posicion)).getEnlace());
+								repiteTurno=true;
+								texto+="Has caido en la casilla "+ ((CasillaConectada)casillas.get(posicion)).getCasillaConectada();
+							}
+							if(casillas.get(posicion).getClass().toString().contains("CasillaRetencion")) {
+								jugadores.get(turnoJugador).setTurnosRetenido(((CasillaRetencion)casillas.get(posicion)).getTurnosRetenido());
+								texto+="Has caido en la casilla "+ ((CasillaRetencion)casillas.get(posicion)).getCasillaRetencion() + 
+										" estas retenido " + ((CasillaRetencion)casillas.get(posicion)).getTurnosRetenido() + " turnos.";
+							}
+							texto+= "Has sacado un "+ tirada + ", estas en la casilla " + jugadores.get(turnoJugador).getFicha().getPosicion() + " .";
+							
+						}
+					}
+
 					
-				}else {
-					jugadores.get(turnoJugador).getFicha().sumaTirada(tirada);
-					texto+= "Has sacado un "+ tirada + ", estas en la casilla " + jugadores.get(turnoJugador).getFicha().getPosicion();
+				
 					if((jugadores.get(turnoJugador).getFicha().getPosicion()) == 61) {
-						texto+= ". Has ganao Loco!!";
+						//Gana partida
+						texto += ". Has ganao Loco!";
+						botonTirarDado.setEnabled(false);
+						
+						Connection conexion;
+						try {
+							conexion = DriverManager.getConnection(
+									"jdbc:mysql://127.0.0.1:3306/oca",
+									"root","ebUdix66");
+					        Statement smt=conexion.createStatement();
+					        //compruebo si el nombre ya existe, si es asi, actualizo sus puntos, sino creo uno nuevo.
+							  ResultSet rs = smt.executeQuery("Select * from puntuaciones where nombre = '" + jugadores.get(turnoJugador).getNombre() + "'");
+							  if(rs.next()) {
+								  //ese jugador ya existe, se actualiza sus puntos
+								byte puntuacion = rs.getByte("puntuacion");
+								smt.executeUpdate("update puntuaciones set puntuacion = " + (puntuacion+3) + " where nombre = '" + jugadores.get(turnoJugador).getNombre() + "'");
+							  }else {
+								  smt.executeUpdate("insert into puntuaciones values ('"+jugadores.get(turnoJugador).getNombre() + "',3)");
+							  }
+							  
+							 rs.close(); 
+					        smt.close();
+					        conexion.close();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					
+						
+					}else {
+						//Sigue la partida
+						if(repiteTurno) {
+							repiteTurno = false;
+						}
+						else {
+							turnoJugador++;
+							if(jugadores.size()==turnoJugador) {
+								turnoJugador = 0;
+								
+							}
+							texto+= ". Ahora es el turno de " + jugadores.get(turnoJugador).getNombre();
+						}
+						
+						
 					}
+					textLog.setText(texto);
+					
 				}
-				if((jugadores.get(turnoJugador).getFicha().getPosicion()+tirada) == 61) {
-					//Gana partida
-					texto += ". Has ganao Loco!";
-					botonTirarDado.setEnabled(false);
-				}else {
-					//Sigue la partida
-					turnoJugador++;
-					if(jugadores.size()==turnoJugador) {
-						turnoJugador = 0;
-					}
-					texto+= ". Ahora es el turno de " + jugadores.get(turnoJugador).getNombre();
-				}
-				labelLog.setText(texto);
+				
 			}
 		});
 		botonTirarDado.setFont(new Font("Consolas", Font.BOLD, 10));
@@ -568,6 +705,7 @@ public class PantallaTablero extends JPanel{
 		gbc_casilla1.gridx = 32;
 		gbc_casilla1.gridy = 15;
 		add(casilla1, gbc_casilla1);
+
 		
 		
 	}

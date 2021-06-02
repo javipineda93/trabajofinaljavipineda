@@ -26,9 +26,9 @@ public class CasillaRetencion extends Casilla{
 	 * @param turnosRetenido byte 
 	 * @param casillaRetencion tipoCasillaRetencion
 	 */
-	public CasillaRetencion(byte numeroCasilla, BufferedImage imagen, HashSet<Jugador> jugadores, byte turnosRetenido,
+	public CasillaRetencion(byte numeroCasilla, byte turnosRetenido,
 			TipoCasillaRetencion casillaRetencion) {
-		super(numeroCasilla, imagen, jugadores);
+		super(numeroCasilla);
 		this.turnosRetenido = turnosRetenido;
 		this.casillaRetencion = casillaRetencion;
 	}

@@ -5,6 +5,8 @@ import javax.swing.JButton;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
@@ -22,6 +24,8 @@ import javax.swing.SwingConstants;
 
 import clases.Ficha;
 import clases.Jugador;
+import excepciones.NombreMuyLargoException;
+import excepciones.NombreVacioException;
 
 public class PantallaInicio extends JPanel{
 	private JTextField campoJug1;
@@ -89,7 +93,7 @@ public class PantallaInicio extends JPanel{
 		botonAnadirJug.setFont(new Font("Consolas", Font.BOLD, 13));
 		botonAnadirJug.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e){
 				
 				if(numJugadores<4) {
 					numJugadores++;
@@ -132,17 +136,30 @@ public class PantallaInicio extends JPanel{
 		JButton botonComenzar = new JButton("Comenzar Partida");
 		botonComenzar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList <Jugador> jugadores =  new ArrayList<Jugador>();
-				jugadores.add(new Jugador(campoJug1.getText().toString(),new Ficha("Rojo",(byte) 1)));
-				jugadores.add(new Jugador(campoJug2.getText().toString(),new Ficha("Azul",(byte) 1)));
-				if(numJugadores==3) {
-					jugadores.add(new Jugador(campoJug3.getText().toString(),new Ficha("Verde",(byte) 1)));
+				try {
+					if(campoJug1.getText().isBlank() || campoJug2.getText().isBlank() || (campoJug3.isEnabled() && campoJug3.getText().isBlank())|| (campoJug4.isEnabled() && campoJug4.getText().isBlank())) {
+						throw new NombreVacioException ("Los campos del nombre no pueden estar vacíos.");
+					}
+					if(campoJug1.getText().length()>15 || campoJug2.getText().length()>15 || (campoJug3.isEnabled() && campoJug3.getText().length()>15)|| (campoJug4.isEnabled() && campoJug4.getText().length()>15)) {
+						throw new NombreMuyLargoException ("El nombre es demasiado largo.");
+					}
+					ArrayList <Jugador> jugadores =  new ArrayList<Jugador>();
+					jugadores.add(new Jugador(campoJug1.getText().toString(),new Ficha("Rojo",(byte) 0)));
+					jugadores.add(new Jugador(campoJug2.getText().toString(),new Ficha("Azul",(byte) 0)));
+					if(numJugadores==3) {
+						jugadores.add(new Jugador(campoJug3.getText().toString(),new Ficha("Verde",(byte) 0)));
+					}
+					if(numJugadores==4) {
+						jugadores.add(new Jugador(campoJug4.getText().toString(),new Ficha("Amarillo",(byte) 0)));
+					}
+							
+					ventana.irAPantallaTablero(jugadores);
+				}catch(NombreVacioException ex) {
+					JOptionPane.showMessageDialog(ventana, ex.getMessage(), "ERROR",JOptionPane.ERROR_MESSAGE);
+				} catch (NombreMuyLargoException e1) {
+					JOptionPane.showMessageDialog(ventana, e1.getMessage(), "ERROR",JOptionPane.ERROR_MESSAGE);
 				}
-				if(numJugadores==4) {
-					jugadores.add(new Jugador(campoJug4.getText().toString(),new Ficha("Amarillo",(byte) 1)));
-				}
-						
-				ventana.irAPantallaTablero(jugadores);
+				
 			}
 		});
 		botonComenzar.setFont(new Font("Consolas", Font.BOLD, 13));
