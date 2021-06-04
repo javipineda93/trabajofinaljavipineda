@@ -170,13 +170,13 @@ public class PantallaInicio extends JPanel{
 						throw new NombreMuyLargoException ("El nombre es demasiado largo.");
 					}
 					ArrayList <Jugador> jugadores =  new ArrayList<Jugador>();
-					jugadores.add(new Jugador(campoJug1.getText().toString(),new Ficha("Rojo",(byte) 0)));
-					jugadores.add(new Jugador(campoJug2.getText().toString(),new Ficha("Azul",(byte) 0)));
+					jugadores.add(new Jugador(campoJug1.getText().toString(),new Ficha((byte) 0)));
+					jugadores.add(new Jugador(campoJug2.getText().toString(),new Ficha((byte) 0)));
 					if(numJugadores==3) {
-						jugadores.add(new Jugador(campoJug3.getText().toString(),new Ficha("Verde",(byte) 0)));
+						jugadores.add(new Jugador(campoJug3.getText().toString(),new Ficha((byte) 0)));
 					}
 					if(numJugadores==4) {
-						jugadores.add(new Jugador(campoJug4.getText().toString(),new Ficha("Amarillo",(byte) 0)));
+						jugadores.add(new Jugador(campoJug4.getText().toString(),new Ficha((byte) 0)));
 					}
 							
 					ventana.irAPantallaTablero(jugadores);
