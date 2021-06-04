@@ -19,18 +19,4 @@ public class CasillaOca extends Casilla{
 		super(numeroCasilla);
 		// TODO Auto-generated constructor stub.
 	}
-	
-	
-	/**
-	 * funcion que al caer en una casilla oca te manda a la siguiente, y repites turno.
-	 */
-	public void siguienteCasillaOca() {
-		
-	}
-
-
-	
-	
-	
-	
 }

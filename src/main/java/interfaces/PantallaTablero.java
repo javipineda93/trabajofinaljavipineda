@@ -1,3 +1,8 @@
+/**
+ * Interfaz en la que nos aparecerá el tablero con una consola que nos irá mostrando la tirada y la posicion de los jugadores.
+ * Aqui se desarrollará el juego
+ */
+
 package interfaces;
 
 import javax.swing.JPanel;
@@ -34,11 +39,19 @@ import java.sql.Statement;
 import javax.swing.JTextArea;
 
 public class PantallaTablero extends JPanel{
+	//variable de clase Ventana para adquirir sus metodos y poder movernos entre interfaces
 	private Ventana ventana;
+	//arrayList de jugadores, aqui guardaremos el numero de jugadores que participarán (2,3 o 4)
 	private ArrayList <Jugador> jugadores;
+	//aqui guardaremos el turno de los jugadores
 	private byte turnoJugador;
+	//en este array meteremos todas las casillas.
 	private ArrayList <Casilla> casillas;
-	
+	/**
+	 * constructor con el que crearemos el tablero
+	 * @param v Clase ventana
+	 * @param jugadores de la partida
+	 */
 	public PantallaTablero(Ventana v, final ArrayList <Jugador> jugadores) {
 		this.ventana = v;
 		this.jugadores = jugadores;
@@ -337,7 +350,10 @@ public class PantallaTablero extends JPanel{
 		gbc_textLog.gridy = 16;
 		add(textLog, gbc_textLog);
 		textLog.setEditable(false);
-		
+		/**
+		 * Al pulsar el boton tirar dado, se creara un numero aleatorio que será la tirada de cada jugador. Dependiendo de la casilla, avanzará normal,
+		 * habrá casillas especiales que o casillas de retención
+		 */
 		final JButton botonTirarDado = new JButton("Tirar Dado");
 		botonTirarDado.addMouseListener(new MouseAdapter() {
 			@Override
@@ -375,7 +391,7 @@ public class PantallaTablero extends JPanel{
 							if(casillas.get(posicion).getClass().toString().contains("CasillaConectada")) {							
 								jugadores.get(turnoJugador).getFicha().setPosicion(((CasillaConectada)casillas.get(posicion)).getEnlace());
 								repiteTurno=true;
-								texto+="Has caido en la casilla "+ ((CasillaConectada)casillas.get(posicion)).getCasillaConectada();
+								texto+="Has caido en la casilla "+ ((CasillaConectada)casillas.get(posicion)).getCasillaConectada() + " .";
 							}
 							if(casillas.get(posicion).getClass().toString().contains("CasillaRetencion")) {
 								jugadores.get(turnoJugador).setTurnosRetenido(((CasillaRetencion)casillas.get(posicion)).getTurnosRetenido());
@@ -388,7 +404,9 @@ public class PantallaTablero extends JPanel{
 					}
 
 					
-				
+					/**
+					 * conexión a la base de datos en la que guardaremos el ganador de la partida y se le añadirán 3 puntos.
+					 */
 					if((jugadores.get(turnoJugador).getFicha().getPosicion()) == 61) {
 						//Gana partida
 						texto += ". Has ganao Loco!";
@@ -708,14 +726,6 @@ public class PantallaTablero extends JPanel{
 
 		
 		
-	}
-	
-	public void jugarPartida() {
-		boolean seguirJugando = true;
-		
-		while(seguirJugando) {
-			
-		}
 	}
 
 }

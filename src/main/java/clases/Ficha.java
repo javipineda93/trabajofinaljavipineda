@@ -6,8 +6,6 @@ package clases;
  *
  */
 public class Ficha {
-	//color que tendrán las fichas
-	private String color;
 	//posicion en la que estarán las fichas
 	private byte posicion;
 	
@@ -16,25 +14,8 @@ public class Ficha {
 	 * @param color de la ficha en el juego
 	 * @param posicion de la ficha en el tablero
 	 */
-	public Ficha(String color, byte posicion) {
-		this.color = color;
+	public Ficha(byte posicion) {
 		this.posicion = posicion;
-	}
-
-	/**
-	 * funcion para obtener el color de la ficha
-	 * @return String color
-	 */
-	public String getColor() {
-		return color;
-	}
-
-	/**
-	 * funcion para definir el color de la ficha
-	 * @param color Ficha
-	 */
-	public void setColor(String color) {
-		this.color = color;
 	}
 
 	/**
@@ -58,7 +39,7 @@ public class Ficha {
 	 */
 	@Override
 	public String toString() {
-		return "Ficha: " + color + ", posicion: " + posicion;
+		return "posicion: " + posicion;
 	}
 	/**
 	 * funcion que nos suma la tirada con la posicion de la ficha.

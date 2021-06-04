@@ -1,3 +1,7 @@
+/**
+ * interfaz de la pantalla inicio. Aqui seleccionaremos el numero de jugadores y sus nombres o visitaremos las puntuaciones de los jugadores.
+ */
+
 package interfaces;
 
 import javax.swing.JPanel;
@@ -28,14 +32,23 @@ import excepciones.NombreMuyLargoException;
 import excepciones.NombreVacioException;
 
 public class PantallaInicio extends JPanel{
+	//campo para seleccionar 1er jugador y su nombre 
 	private JTextField campoJug1;
+	//campo para seleccionar 2ndo jugador y su nombre
 	private JTextField campoJug2;
+	//campo para seleccionar  3er jugador y su nombre
 	private JTextField campoJug3;
+	//campo para seleccionar 4to jugador y su nombre
 	private JTextField campoJug4;
+	//numero de jugadores
 	private byte numJugadores;
+	//clase Ventana
 	private Ventana ventana;
 	
-	
+	/**
+	 * constructor de la pantalla inicio 
+	 * @param v Variable de la clase Ventana
+	 */
 	public PantallaInicio(Ventana v) {
 		this.ventana = v;
 		setLayout(new BorderLayout(0, 0));
@@ -83,12 +96,19 @@ public class PantallaInicio extends JPanel{
 		campoJug4.setColumns(10);
 		
 		
-		
-		JButton botonCargar = new JButton("Cargar Partida");
+		//con este boton iremos a las puntuaciones de los jugadores. +3 por ganar la partida
+		JButton botonCargar = new JButton("Puntuaciones");
+		botonCargar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ventana.irAPantallaPuntuaciones();
+			}
+		});
 		botonCargar.setFont(new Font("Consolas", Font.BOLD, 13));
 		botonCargar.setBounds(118, 405, 269, 45);
 		panelMedio.add(botonCargar);
 		
+		//con este boton añadiremos jugadores, se pueden jugar minimo 2 y maximo 4.
 		JButton botonAnadirJug = new JButton("A\u00F1adir Jugador");
 		botonAnadirJug.setFont(new Font("Consolas", Font.BOLD, 13));
 		botonAnadirJug.addMouseListener(new MouseAdapter() {
@@ -111,6 +131,7 @@ public class PantallaInicio extends JPanel{
 		botonAnadirJug.setBounds(129, 185, 247, 31);
 		panelMedio.add(botonAnadirJug);
 		
+		//con este boton quitaremos jugadores. Minimo tiene que haber 2.
 		JButton botonQuitarJug = new JButton("Quitar Jugador");
 		botonQuitarJug.setFont(new Font("Consolas", Font.BOLD, 13));
 		botonQuitarJug.addMouseListener(new MouseAdapter() {
@@ -133,6 +154,11 @@ public class PantallaInicio extends JPanel{
 		
 		this.numJugadores = 2;
 		
+		/**
+		 * con este boton se comenzará la partida una vez hayamos seleccionado el numero de jugadores y sus nombres.
+		 * En caso de no elegir nombre, se pondra por defecto Jugador 1 y Jugador 2.
+		 * Si el nombre seleccionado está vacio o es mas largo de 15 caracteres, lanzará una excepcion.
+		 */
 		JButton botonComenzar = new JButton("Comenzar Partida");
 		botonComenzar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
